@@ -1,7 +1,6 @@
-import redisClient from "../utils/redis";
+import redisClient from '../utils/redis';
 
-import dbCli from "../utils/db";
-
+import dbCli from '../utils/db';
 
 class AppController {
   static getStatus(req, res) {
@@ -13,7 +12,7 @@ class AppController {
   static async getStats(req, res) {
     const usersNum = await dbCli.nbUsers();
     const filesNum = await dbCli.nbFiles();
-    res.status(200).send({ "users": usersNum, "files": filesNum })
+    res.status(200).send({ 'users': usersNum, 'files': filesNum });
   }
 }
 
