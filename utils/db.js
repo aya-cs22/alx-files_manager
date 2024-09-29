@@ -40,6 +40,7 @@ class DBClient {
     const count = await this.db.collection('users').countDocuments();
     return count;
   }
+
   // Asynchronous function to get the number of documents in the 'files' collection
   async nbFiles() {
     if (!this.isAlive()) {
