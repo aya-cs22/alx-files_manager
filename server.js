@@ -6,6 +6,9 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
+// Middleware to parse JSON bodies
+app.use(express.json());
+
 // load all routes from the file routes/index.js
 app.use('/', router);
 
