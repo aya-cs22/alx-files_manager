@@ -1,7 +1,7 @@
 //  all endpoints of the API
 import { Router } from 'express';
 import AppController from '../controllers/AppController';
-import UsersController from '../controllers/UsersController';
+import UsersController from '../controllers/UsersControllerr';
 import AuthController from '../controllers/AuthController';
 
 const router = Router();
