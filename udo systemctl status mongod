@@ -1,1 +1,11 @@
-Unit mongod.service could not be found.
+[0;1;32m●[0m mongod.service - MongoDB Database Server
+     Loaded: loaded (/lib/systemd/system/mongod.service; disabled; vendor preset: enabled)
+     Active: [0;1;32mactive (running)[0m since Wed 2024-10-02 19:30:19 EEST; 12s ago
+       Docs: https://docs.mongodb.org/manual
+   Main PID: 3580 (mongod)
+     Memory: 104.6M
+     CGroup: /system.slice/mongod.service
+             └─3580 /usr/bin/mongod --config /etc/mongod.conf
+
+Oct 02 19:30:19 hagar-pc systemd[1]: Started MongoDB Database Server.
+Oct 02 19:30:19 hagar-pc mongod[3580]: {"t":{"$date":"2024-10-02T16:30:19.945Z"},"s":"I",  "c":"CONTROL",  "id":7484500, "ctx":"main","msg":"Environment variable MONGODB_CONFIG_OVERRIDE_NOFORK == 1, overriding \"processManagement.fork\" to false"}
