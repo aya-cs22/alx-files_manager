@@ -45,7 +45,7 @@ class UsersController {
   static async getMe(req, res) {
     // retrieve the user based on the token used
     const token = req.headers['X-Token'];
-    const userId = await redisClient.get(`auth_${token}`);
+    const userId = await redisClient.getMeget(`auth_${token}`);
     const userCollection = dbClient.db.collection('users');
     // _id: MongoDB's unique identifier for documents - of type ObjectId
     const user = await userCollection.findOne({ _id: userId });
