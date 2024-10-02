@@ -5,8 +5,8 @@ import redisClient from '../utils/redis';
 import dbClient from '../utils/db';
 
 class AuthController {
-  static async getConnect(req, res) { //sign-in the user by generating a new authentication token
-    const authHeader = req.headers['authorization'];
+  static async getConnect(req, res) { // sign-in the user by generating a new authentication token
+    const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Basic ')) {
       return res.status(400).json({ error: 'Missing or malformed Authorization header' });
     }
@@ -20,22 +20,33 @@ class AuthController {
     const hashedPassword = sha1(password);
     const user = await dbClient.db.collection('users').findOne({ email, password: hashedPassword });
     if (!user) {
-      return res.status(401).json({error: 'Unauthorized'});
+      return res.status(401).json({ error: 'Unauthorized' });
     }
     // Generate a new token
     const token = uuidv4();
     await redisClient.set(`auth_${token}`, user._id, 86400);
-    return res.status(200).json({ "token": token });
+    return res.status(200).json({ token });
   }
 
-  static async getDisconnect(req, res) { //sign-out the user
+  static async getDisconnect(req, res) { // sign-out the user
     const token = req.headers['X-Token'];
     const userId = await redisClient.get(`auth_${token}`);
     if (!userId) {
-      return res.status(401).json({error: 'Unauthorized'});
+      return res.status(401).json({ error: 'Unauthorized' });
     }
     await redisClient.del(`auth_${token}`);
     return res.status(204).send();
+  }
+
+  static async getMe(req, res) {
+    const token = req.headers['X-Token'];
+    const userId = await redisClient.get(`auth_${token}`);
+    const userCollection = dbClient.db.collection('users');
+    const user = await userCollection.findOne({ _id: userId });
+    if (!user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    return res.status(200).json({ id: user._id, email: user.email });
   }
 }
 
