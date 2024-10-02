@@ -1,5 +1,6 @@
 import sha1 from 'sha1';
 import dbClient from '../utils/db';
+import redisClient from '../utils/redis';
 
 class UsersController {
   static async postNew(req, res) {
@@ -51,7 +52,7 @@ class UsersController {
     if (!user) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
-    return res.status(200).json({ id: user._id, email: user.email })
+    return res.status(200).json({ id: user._id, email: user.email });
   }
 }
 
